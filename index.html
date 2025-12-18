@@ -2,82 +2,17 @@
 <!DOCTYPE html> <!-- ใช้การแสดงผลของการใช้ html 5-->
 <html lang="th">
 <head>
+    <link rel="stylesheet"  href="css/style.css">
     <meta charset="UTF-8"> <!-- กำหนดการประมวลผลให้สามารถแสดงผลภาษาไทยได้ -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ประวัติส่วนตัว</title>
+    <style>
+        h3{
+        
+        color: rgb(147, 20, 37);
+}
+    </style>
 </head>
-<style>
-    /*ตั้งค่าพื้นฐานของหน้าเว็บ*/
-    body{
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        margin: 0; /* ขอบด้านนอก */
-        padding:0; /* ขอบด้านใน */
-        background-color: rgb(144, 189, 189);
-    }
-    /* จั้งค่า div นอกสุด */   
-    .container {
-        max-width: 900px;
-        margin: 40px auto;
-        background-color: #ffffff;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.08); /* เงาของกรอบ */
-        padding: 30px;
-    }
-    .header{
-        text-align: center;
-        margin-bottom: 25px;
-    }
-    .header h1{
-        margin: 0;
-        font-size: 4rem;
-        color: rgb(6, 4, 50);
-    }
-    .header h2{
-        margin: 0;
-        font-size: 2rem;
-        color: rgb(19, 9, 85);
-    }
-    /*รูปโปรไฟล์*/
-    .profile-img{
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
-        object-fit: cover;
-        border:3px solid rgb(45, 38, 88);
-    }
-    .row{
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-    }
-    /* จัด layout แบบ column อย่างง่าย */
-    .column{ 
-        flex: 1;
-        min-width: 250px;
-    }
-    
-    h3{
-        border-bottom:3px solid #1c5e85;
-        padding-bottom:5px ;
-        margin-bottom:10px ;
-        color: rgb(15, 8, 77);
-    }
-    .info-item{
-        margin-bottom:6px;
-    }
-    .label{
-        font-weight: bold;}
-    ul{
-        padding-left: 20px;
-    }
-    /*ส่วนท้ายด้านล่างสุด*/
-    .footer{
-        margin: 30px;
-        text-align: center;
-        font-size: 0.9rem;
-        color: #1c5e85;
-    }
-</style>
 <body>
     <div class="container">
         <div class="header">
@@ -87,7 +22,7 @@
         </div>
             <div class="row">
                 <div class="column">
-                    <h3>ข้อมูลส่วนตัว</h3>
+                    <h3 style="color: green; text-decoration:underline;">ข้อมูลส่วนตัว</h3>
                     <p class="info-item"><span class="label">ชื่อเล่น</span> : มิลค์</p>
                     <p class="info-item"><span class="label">อยู่จังหวัด</span> : สกลนคร</p>
 
