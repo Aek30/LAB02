@@ -1,7 +1,8 @@
-<!DOCTYPE html>
+<!-- ตัวนี้เป็ฯตัวอย่างการใช้งาน css พื้นฐาน-->
+<!DOCTYPE html> <!-- ใช้การแสดงผลของการใช้ html 5-->
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"> <!-- กำหนดการประมวลผลให้สามารถแสดงผลภาษาไทยได้ -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ประวัติส่วนตัว</title>
 </head>
@@ -9,53 +10,118 @@
     /*ตั้งค่าพื้นฐานของหน้าเว็บ*/
     body{
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        margin: 0;
-        padding:0;
+        margin: 0; /* ขอบด้านนอก */
+        padding:0; /* ขอบด้านใน */
         background-color: rgb(144, 189, 189);
-    }   
+    }
+    /* จั้งค่า div นอกสุด */   
     .container {
         max-width: 900px;
         margin: 40px auto;
         background-color: #ffffff;
         border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.08); /* เงาของกรอบ */
         padding: 30px;
     }
-
+    .header{
+        text-align: center;
+        margin-bottom: 25px;
+    }
+    .header h1{
+        margin: 0;
+        font-size: 4rem;
+        color: rgb(6, 4, 50);
+    }
+    .header h2{
+        margin: 0;
+        font-size: 2rem;
+        color: rgb(19, 9, 85);
+    }
+    /*รูปโปรไฟล์*/
+    .profile-img{
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        border:3px solid rgb(45, 38, 88);
+    }
+    .row{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+    /* จัด layout แบบ column อย่างง่าย */
+    .column{ 
+        flex: 1;
+        min-width: 250px;
+    }
+    
+    h3{
+        border-bottom:3px solid #1c5e85;
+        padding-bottom:5px ;
+        margin-bottom:10px ;
+        color: rgb(15, 8, 77);
+    }
+    .info-item{
+        margin-bottom:6px;
+    }
+    .label{
+        font-weight: bold;}
+    ul{
+        padding-left: 20px;
+    }
+    /*ส่วนท้ายด้านล่างสุด*/
+    .footer{
+        margin: 30px;
+        text-align: center;
+        font-size: 0.9rem;
+        color: #1c5e85;
+    }
 </style>
 <body>
     <div class="container">
         <div class="header">
-            <img src="assets\images\profile.jpg" alt="รูปภาพโปรไฟล์">
+            <img class="profile-img" src="assets\images\profile.jpg" alt="รูปภาพโปรไฟล์">
             <h1>เอกวลี ชรินทร์</h1>
             <h2> Programmer </h2>
+        </div>
             <div class="row">
                 <div class="column">
                     <h3>ข้อมูลส่วนตัว</h3>
-                    <p>ชื่อเล่น : มิลค์</p>
-                    <p>อยู่จังหวัด : สกลนคร</p>
+                    <p class="info-item"><span class="label">ชื่อเล่น</span> : มิลค์</p>
+                    <p class="info-item"><span class="label">อยู่จังหวัด</span> : สกลนคร</p>
 
                     <h3>ข้อมูลการติดต่อ</h3>
-                    <p>โทรศัพท์ : 0979507969</p>
-                    <p>อีเมล : aekwalee3004@gmail.com</p>
-                    <p>Facebook : aekwalee charin</p>
+                    <p class="info-item"><span class="label">โทรศัพท์</span> : 0979507969</p>
+                    <p class="info-item"><span class="label">อีเมล</span> : aekwalee3004@gmail.com</p>
+                    <p class="info-item"><span class="label">Facebook</span> : aekwalee charin</p>
+
+                    <h3>งานอดิเรก</h3>
+                   <ul>
+                    <li>อ่านการ์ตูน</li>
+                    <li>ฟังเพลง</li>
+                    <li>อ่านหนังสือ</li>
+                    <li>ทำกาแฟ</li> </ul>
                 </div> 
                 <div class="column">
                     <h3>ประวัติการศึกษา</h3>
-                    <p>ปวช : คอมพิวเตอร์ธุรกิจ</p>
-                    <p>ปริญญาตรี : วิทยาศาสตร์และเทคโนโลยี มทร.ธัญบุรี</p>
-
+                    <ul>
+                    <li>ปวช : คอมพิวเตอร์ธุรกิจ</li>
+                    <li>ปริญญาตรี : วิทยาศาสตร์และเทคโนโลยี มทร.ธัญบุรี</li>
+                    </ul>
                     <h3>ทักษะ</h3>
-                    <p>ภาษาทางโปรแกรม : HTML,CSS,Python,C++,JavaScript</p>
-                    <p>ทักษะอื่นๆ : ภาษาอังกฤษ</p>
-                </div>               
+                    <ul>
+                    <li>ภาษาทางโปรแกรม : HTML,CSS,Python,C++,JavaScript</li>
+                    <li>ทักษะอื่นๆ : ภาษาอังกฤษ</li>
+                    </ul>
+                </div> <br>       
             </div>
             <h3>About Me</h3>
-            <p>เคยมีประสบการณ์ทำงานร้านอาหาร</p>
+            <p>เคยมีประสบการณ์ทำงานร้านอาหารมากกว่า 5 ปี</p>
             <div class="footer">
                 &copy;2025 Aekwalee charin | personal Profile Page
             </div>
-        </div>
+        
     </div>
 </body>
 </html>
