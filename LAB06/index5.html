@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Personal Portfolio - Tailwind + DOM</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+ 
+<body class="bg-slate-50 text-slate-900">
+  <!-- =========================
+    TOP BAR: Theme toggle
+  ========================== -->
+  <header class="border-b bg-white">
+    <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="font-extrabold">My<span class="text-blue-600">Portfolio</span></div>
+ 
+      <!-- ปุ่มสลับ theme (เดโม: เปลี่ยน class ที่ body) -->
+      <button id="btnTheme"
+        class="px-4 py-2 rounded-lg border hover:bg-slate-50 text-sm font-medium"
+        aria-pressed="false"
+      >
+        🌙 Dark
+      </button>
+    </div>
+  </header>
+ 
+  <main class="max-w-5xl mx-auto px-4 py-10">
+    <!-- =========================
+      HERO
+    ========================== -->
+    <section class="grid md:grid-cols-3 gap-6 items-start">
+      <div class="md:col-span-2 bg-white border rounded-2xl p-6 shadow-sm">
+        <h1 class="text-3xl font-extrabold">Kee (Demo)</h1>
+        <p class="mt-2 text-slate-600">
+          Front-end / Data / Teaching — เดโม Portfolio ที่มี filter, modal, form validate
+        </p>
+ 
+        <div class="mt-5 flex flex-wrap gap-2">
+          <span class="px-3 py-1 rounded-full bg-slate-100 border text-sm">HTML</span>
+          <span class="px-3 py-1 rounded-full bg-slate-100 border text-sm">Tailwind</span>
+          <span class="px-3 py-1 rounded-full bg-slate-100 border text-sm">DOM</span>
+        </div>
+      </div>
+ 
+      <aside class="bg-white border rounded-2xl p-6 shadow-sm">
+        <h2 class="font-bold">Contact</h2>
+        <p class="mt-2 text-sm text-slate-600">Email: demo@example.com</p>
+        <p class="text-sm text-slate-600">Location: Thailand</p>
+      </aside>
+    </section>
+ 
+    <!-- =========================
+      PROJECTS: Filter buttons + list
+      DOM:
+      - click filter => render list ใหม่
+      - click card => open modal detail
+    ========================== -->
+    <section class="mt-10">
+      <div class="flex items-end justify-between gap-4 flex-wrap">
+        <div>
+          <h2 class="text-2xl font-extrabold">Projects</h2>
+          <p class="mt-1 text-slate-600 text-sm">กด filter เพื่อดูงานเฉพาะหมวด</p>
+        </div>
+ 
+        <!-- ปุ่ม filter -->
+        <div id="filters" class="flex gap-2">
+          <button class="filter-btn px-4 py-2 rounded-xl border bg-white hover:bg-slate-50 text-sm" data-tag="all">
+            All
+          </button>
+          <button class="filter-btn px-4 py-2 rounded-xl border bg-white hover:bg-slate-50 text-sm" data-tag="web">
+            Web
+          </button>
+          <button class="filter-btn px-4 py-2 rounded-xl border bg-white hover:bg-slate-50 text-sm" data-tag="data">
+            Data
+          </button>
+          <button class="filter-btn px-4 py-2 rounded-xl border bg-white hover:bg-slate-50 text-sm" data-tag="iot">
+            IoT
+          </button>
+        </div>
+      </div>
+ 
+      <!-- กล่องรายการ projects (เราจะ render ด้วย JS) -->
+      <div id="projectGrid" class="mt-6 grid md:grid-cols-3 gap-4"></div>
+    </section>
+ 
+    <!-- =========================
+      CONTACT FORM (validate)
+    ========================== -->
+    <section class="mt-12">
+      <div class="bg-white border rounded-2xl p-6 shadow-sm">
+        <h2 class="text-xl font-extrabold">Send a message</h2>
+ 
+        <form id="contactForm" class="mt-4 grid md:grid-cols-2 gap-4">
+          <div>
+            <label class="text-sm font-medium">Name</label>
+            <input id="nameInput"
+              class="mt-1 w-full px-4 py-3 rounded-xl border focus:outline-none focus:ring-2 focus:ring-blue-600"
+              placeholder="Your name"
+            />
+            <p id="nameErr" class="mt-1 text-sm"></p>
+          </div>
+ 
+          <div>
+            <label class="text-sm font-medium">Email</label>
+            <input id="contactEmail"
+              class="mt-1 w-full px-4 py-3 rounded-xl border focus:outline-none focus:ring-2 focus:ring-blue-600"
+              placeholder="name@example.com"
+            />
+            <p id="emailErr" class="mt-1 text-sm"></p>
+          </div>
+ 
+          <div class="md:col-span-2">
+            <label class="text-sm font-medium">Message</label>
+            <textarea id="msgInput"
+              class="mt-1 w-full px-4 py-3 rounded-xl border focus:outline-none focus:ring-2 focus:ring-blue-600"
+              rows="4"
+              placeholder="Say hello..."
+            ></textarea>
+            <p id="msgErr" class="mt-1 text-sm"></p>
+          </div>
+ 
+          <div class="md:col-span-2 flex items-center justify-between gap-3 flex-wrap">
+            <button class="px-5 py-3 rounded-xl bg-slate-900 text-white hover:bg-black">
+              Send
+            </button>
+            <p id="formStatus" class="text-sm"></p>
+          </div>
+        </form>
+      </div>
+    </section>
+ 
+    <footer class="mt-12 py-10 text-center text-sm text-slate-500">
+      © 2025 Portfolio Demo
+    </footer>
+  </main>
+ 
+  <!-- =========================
+    MODAL (ซ่อน/แสดงด้วย class hidden)
+  ========================== -->
+  <div id="modal"
+    class="fixed inset-0 hidden items-center justify-center p-4 bg-black/40"
+    role="dialog"
+    aria-modal="true"
+  >
+    <div class="w-full max-w-lg bg-white rounded-2xl shadow-lg border p-6">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 id="modalTitle" class="text-xl font-extrabold">Title</h3>
+          <p id="modalTag" class="mt-1 text-sm text-slate-600">tag</p>
+        </div>
+ 
+        <button id="btnCloseModal" class="px-3 py-2 rounded-lg border hover:bg-slate-50">
+          ✕
+        </button>
+      </div>
+ 
+      <p id="modalDesc" class="mt-4 text-slate-700"></p>
+ 
+      <div class="mt-6 flex justify-end">
+        <button id="btnOk" class="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700">
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+ 
+  <script>
+    /* ============================================================
+      PORTFOLIO JS
+      DOM Skills:
+      - render list จาก array (สร้าง HTML ด้วย JS)
+      - filter ด้วยปุ่ม (data-tag)
+      - modal เปิด/ปิด
+      - theme toggle (เปลี่ยน class ที่ body)
+      - form validate (หลาย field)
+    ============================================================ */
+ 
+    // ----------------------------
+    // 1) ข้อมูลตัวอย่าง (เหมือน data จาก backend)
+    // ----------------------------
+    const projects = [
+      { id: 1, title: 'Landing Page', tag: 'web', desc: 'หน้าเว็บโปรโมทสินค้า + CTA + responsive' },
+      { id: 2, title: 'Dashboard', tag: 'data', desc: 'สรุปข้อมูลแบบการ์ด + ตาราง (เดโม)' },
+      { id: 3, title: 'IoT Monitor', tag: 'iot', desc: 'แสดงสถานะเซ็นเซอร์และแจ้งเตือน' },
+      { id: 4, title: 'Portfolio', tag: 'web', desc: 'รวมผลงาน + modal + filter' },
+      { id: 5, title: 'Survey Analysis', tag: 'data', desc: 'วิเคราะห์ผลแบบสอบถาม + กราฟ' },
+    ];
+ 
+    // ----------------------------
+    // 2) เลือก DOM elements
+    // ----------------------------
+    const projectGrid = document.querySelector('#projectGrid');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+ 
+    const modal = document.querySelector('#modal');
+    const modalTitle = document.querySelector('#modalTitle');
+    const modalTag = document.querySelector('#modalTag');
+    const modalDesc = document.querySelector('#modalDesc');
+    const btnCloseModal = document.querySelector('#btnCloseModal');
+    const btnOk = document.querySelector('#btnOk');
+ 
+    const btnTheme = document.querySelector('#btnTheme');
+ 
+    const contactForm = document.querySelector('#contactForm');
+    const nameInput = document.querySelector('#nameInput');
+    const contactEmail = document.querySelector('#contactEmail');
+    const msgInput = document.querySelector('#msgInput');
+ 
+    const nameErr = document.querySelector('#nameErr');
+    const emailErr = document.querySelector('#emailErr');
+    const msgErr = document.querySelector('#msgErr');
+    const formStatus = document.querySelector('#formStatus');
+ 
+    // ----------------------------
+    // 3) ฟังก์ชัน render projects
+    // ----------------------------
+    function renderProjects(tag) {
+      // filter ตาม tag
+      const list = tag === 'all'
+        ? projects
+        : projects.filter((p) => p.tag === tag);
+ 
+      // สร้าง HTML string
+      // จุดสำคัญ: ใส่ data-id เพื่อให้รู้ว่าการ์ดนี้คือโปรเจ็คไหน
+      projectGrid.innerHTML = list.map((p) => `
+        <button
+          class="project-card text-left bg-white border rounded-2xl p-5 shadow-sm hover:shadow transition"
+          data-id="${p.id}"
+        >
+          <div class="text-xs font-semibold text-blue-600 uppercase">${p.tag}</div>
+          <div class="mt-1 font-extrabold">${p.title}</div>
+          <p class="mt-2 text-sm text-slate-600">${p.desc}</p>
+          <div class="mt-4 text-sm font-semibold text-slate-900">View detail →</div>
+        </button>
+      `).join('');
+ 
+      // หลัง render แล้ว ต้อง “ผูก event” ใหม่กับการ์ดที่เพิ่งถูกสร้าง
+      bindProjectCardEvents();
+    }
+ 
+    // ----------------------------
+    // 4) ผูก event ให้ cards (เปิด modal)
+    // ----------------------------
+    function bindProjectCardEvents() {
+      const cards = document.querySelectorAll('.project-card');
+ 
+      cards.forEach((card) => {
+        card.addEventListener('click', () => {
+          const id = Number(card.dataset.id);
+          const proj = projects.find((p) => p.id === id);
+ 
+          // ใส่ข้อมูลลง modal
+          modalTitle.textContent = proj.title;
+          modalTag.textContent = `Category: ${proj.tag}`;
+          modalDesc.textContent = proj.desc;
+ 
+          // โชว์ modal
+          modal.classList.remove('hidden');
+          modal.classList.add('flex');
+        });
+      });
+    }
+ 
+    function closeModal() {
+      // ซ่อน modal
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+ 
+    // ----------------------------
+    // 5) Filter buttons
+    // ----------------------------
+    filterBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const tag = btn.dataset.tag;
+ 
+        // highlight ปุ่มที่ active
+        filterBtns.forEach((b) => b.classList.remove('bg-slate-900', 'text-white'));
+        btn.classList.add('bg-slate-900', 'text-white');
+ 
+        // render list ใหม่
+        renderProjects(tag);
+      });
+    });
+ 
+    // ----------------------------
+    // 6) Modal close events
+    // ----------------------------
+    btnCloseModal.addEventListener('click', closeModal);
+    btnOk.addEventListener('click', closeModal);
+ 
+    // คลิกพื้นหลัง (overlay) ให้ปิดได้
+    modal.addEventListener('click', (e) => {
+      // ถ้าคลิกที่ overlay จริง ๆ (ไม่ใช่กล่องข้างใน) ให้ปิด
+      if (e.target === modal) closeModal();
+    });
+ 
+    // ----------------------------
+    // 7) Theme toggle (เดโมแบบง่าย)
+    // ----------------------------
+    let isDark = false;
+ 
+    btnTheme.addEventListener('click', () => {
+      isDark = !isDark;
+      btnTheme.setAttribute('aria-pressed', String(isDark));
+ 
+      // เปลี่ยนคลาสที่ body เพื่อจำลอง dark mode
+      // (โปรเจ็คจริงมักใช้ Tailwind dark: + เพิ่ม class "dark" ที่ html)
+      if (isDark) {
+        document.body.className = 'bg-slate-900 text-slate-50';
+        btnTheme.textContent = '☀️ Light';
+      } else {
+        document.body.className = 'bg-slate-50 text-slate-900';
+        btnTheme.textContent = '🌙 Dark';
+      }
+    });
+ 
+    // ----------------------------
+    // 8) Form validate
+    // ----------------------------
+    function validEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+ 
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+ 
+      // อ่านค่า
+      const name = nameInput.value.trim();
+      const email = contactEmail.value.trim();
+      const msg = msgInput.value.trim();
+ 
+      // reset error
+      nameErr.textContent = '';
+      emailErr.textContent = '';
+      msgErr.textContent = '';
+      formStatus.textContent = '';
+ 
+      let ok = true;
+ 
+      // ตรวจ name
+      if (name.length < 2) {
+        nameErr.textContent = 'ชื่อควรมีอย่างน้อย 2 ตัวอักษร';
+        nameErr.className = 'mt-1 text-sm text-red-600';
+        ok = false;
+      }
+ 
+      // ตรวจ email
+      if (!validEmail(email)) {
+        emailErr.textContent = 'อีเมลไม่ถูกต้อง';
+        emailErr.className = 'mt-1 text-sm text-red-600';
+        ok = false;
+      }
+ 
+      // ตรวจ message
+      if (msg.length < 5) {
+        msgErr.textContent = 'ข้อความควรมีอย่างน้อย 5 ตัวอักษร';
+        msgErr.className = 'mt-1 text-sm text-red-600';
+        ok = false;
+      }
+ 
+      if (!ok) return;
+ 
+      // เดโมว่า “ส่งสำเร็จ”
+      formStatus.textContent = 'ส่งข้อความแล้ว (เดโม) ✅';
+      formStatus.className = 'text-sm text-green-400 md:text-green-700';
+ 
+      // ล้างฟอร์ม
+      nameInput.value = '';
+      contactEmail.value = '';
+      msgInput.value = '';
+    });
+ 
+    // ----------------------------
+    // เริ่มต้น: render all
+    // ----------------------------
+    renderProjects('all');
+ 
+    // ตั้งค่าให้ปุ่ม All เป็น active ตั้งแต่แรก
+    filterBtns[0].classList.add('bg-slate-900', 'text-white');
+  </script>
+</body>
+</html>
+ 

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+    <form>
+        <label for="email">อีเมล : </label>
+        <input id ="email" type="email" place="ระบุอีเมล">
+    </form>
+    <p id ="error"></p>
+ <script>
+    const email = document.getElementsByName("email").value;
+    const error = document.getElementById("error");
+    if (email === ""){
+        error.textContent = "กรุณาระบุอีเมล";
+    }
+ </script>
+</body>
+</html>
+
+ 
